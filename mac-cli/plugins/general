@@ -47,16 +47,28 @@ case "$fn" in
 
         echo "Updating installed pip packages..."
         if [ "$echocommand" == "true" ]; then
-            echo "${GREEN}pip list --outdated | tail -n +3 | awk '{print \$1}' | xargs -n1 pip install -U\n${NC}"
+            echo "${GREEN}pip list --outdated | tail -n +3 | awk '{print \$1}' | xargs -r -n1 pip install -U\n${NC}"
         fi
-        pip list --outdated | tail -n +3 | awk '{print $1}' | xargs -n1 pip install -U
+
+        OUTDATED_PACKAGES=$(pip list --outdated | tail -n +3)
+        if [ -n "$OUTDATED_PACKAGES" ]; then
+            echo "$OUTDATED_PACKAGES" | awk '{print $1}' | xargs -n1 pip install -U
+        else
+            echo "No outdated pip packages found."
+        fi
 
         if [ -x "$(command -v pip3)" ]; then
             echo "Updating installed pip3 packages..."
             if [ "$echocommand" == "true" ]; then
-                echo "${GREEN}pip3 list --outdated | tail -n +3 | awk '{print \$1}' | xargs -n1 pip3 install -U\n${NC}"
+                echo "${GREEN}pip3 list --outdated | tail -n +3 | awk '{print \$1}' | xargs -r -n1 pip3 install -U\n${NC}"
             fi
-            pip3 list --outdated | tail -n +3 | awk '{print $1}' | xargs -n1 pip3 install -U
+
+            OUTDATED_PIP3_PACKAGES=$(pip3 list --outdated | tail -n +3)
+            if [ -n "$OUTDATED_PIP3_PACKAGES" ]; then
+                echo "$OUTDATED_PIP3_PACKAGES" | awk '{print $1}' | xargs -n1 pip3 install -U
+            else
+                echo "No outdated pip3 packages found."
+            fi
         fi
 
         if [ -f /usr/local/bin/apm ]; then
@@ -66,7 +78,7 @@ case "$fn" in
             fi
             apm upgrade --no-confirm
         fi
-    ;;
+        ;;
 
 
     # Upgrade Mac CLI to the latest version
