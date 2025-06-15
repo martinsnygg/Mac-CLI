@@ -47,12 +47,12 @@ case "$fn" in
 
         echo "Updating installed pip packages..."
         if [ "$echocommand" == "true" ]; then
-            echo "${GREEN}pip list --outdated | tail -n +3 | awk '{print \$1}' | xargs -r -n1 pip install -U\n${NC}"
+            echo "${GREEN}pip list --outdated --user | tail -n +3 | awk '{print \$1}' | xargs -n1 pip install --user -U\n${NC}"
         fi
 
-        OUTDATED_PACKAGES=$(pip list --outdated | tail -n +3)
+        OUTDATED_PACKAGES=$(pip list --outdated --user | tail -n +3)
         if [ -n "$OUTDATED_PACKAGES" ]; then
-            echo "$OUTDATED_PACKAGES" | awk '{print $1}' | xargs -n1 pip install -U
+            echo "$OUTDATED_PACKAGES" | awk '{print $1}' | xargs -n1 pip install --user -U
         else
             echo "No outdated pip packages found."
         fi
@@ -60,12 +60,12 @@ case "$fn" in
         if [ -x "$(command -v pip3)" ]; then
             echo "Updating installed pip3 packages..."
             if [ "$echocommand" == "true" ]; then
-                echo "${GREEN}pip3 list --outdated | tail -n +3 | awk '{print \$1}' | xargs -r -n1 pip3 install -U\n${NC}"
+                echo "${GREEN}pip3 list --outdated --user | tail -n +3 | awk '{print \$1}' | xargs -n1 pip3 install --user -U\n${NC}"
             fi
 
-            OUTDATED_PIP3_PACKAGES=$(pip3 list --outdated | tail -n +3)
+            OUTDATED_PIP3_PACKAGES=$(pip3 list --outdated --user | tail -n +3)
             if [ -n "$OUTDATED_PIP3_PACKAGES" ]; then
-                echo "$OUTDATED_PIP3_PACKAGES" | awk '{print $1}' | xargs -n1 pip3 install -U
+                echo "$OUTDATED_PIP3_PACKAGES" | awk '{print $1}' | xargs -n1 pip3 install --user -U
             else
                 echo "No outdated pip3 packages found."
             fi
