@@ -11,7 +11,7 @@ main() {
 	    rm -rf ~/Downloads/mac-cli-update/
 	fi
 	mkdir ~/Downloads/mac-cli-update/ && cd ~/Downloads/mac-cli-update/
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/martinsnygg/mac-cli/master/mac-cli/tools/install)" && cd -
+	sh -c "$(curl -fsSL https://codeberg.org/martinsnygg/Mac-CLI/raw/branch/master/mac-cli/tools/install)" && cd -
 	echo "${GREEN}Mac CLI has been updated to the latest version\n${NC}"
 }
 
